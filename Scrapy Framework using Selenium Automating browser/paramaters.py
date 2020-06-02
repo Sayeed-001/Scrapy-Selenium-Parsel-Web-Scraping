@@ -1,14 +1,14 @@
 # PARAMATERS.PY used in SCRIPT.PY FILE
-chromedriver_path = #'enter the path of your chromedriver'        # INSERT PATH OF YOUR CHROMEDRIVER
+chromedriver_path = 'chromedriver path'        # INSERT PATH OF YOUR CHROMEDRIVER
 base_url = 'https://internshala.com'   						  # Base URL
 
-internshala_user = #'Enter your username'  				              # Insert Internshala Username
-user_password = #'Password' 		 						  # Insert Internshala Password
+internshala_user = '#'  				              # Insert Internshala Username
+user_password = '#' 		 						  # Insert Internshala Password
 
 
-JOB_CATEGORY = 'Analytics'           	# remove # select the Job Category type from below for searching jobs of specific domain.					  
+JOB_CATEGORY = 'Analytics'     # change if you want, type from below for searching jobs of specific domain.					  
 										 
-
+filename = 'filename.csv'           # uncomment me *Output Filename(here you can change the O/P format of scraped data such as*.csv, *.json, *.xml)
 
 
 

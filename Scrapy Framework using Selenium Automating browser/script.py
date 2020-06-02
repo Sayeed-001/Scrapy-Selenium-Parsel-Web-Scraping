@@ -1,7 +1,8 @@
 ## Initializing Selenium webdriver using Chrome, Login Internshala.com website using username and password.
-
+# Witing data points to csv
 from time import sleep
 import re
+import csv
 
 import paramaters
 
@@ -10,6 +11,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 
 from parsel import Selector
+
+# CSV writer/Formatter
+writer = csv.writer(open(paramaters.filename, 'w'))
+writer.writerow(['Job Title', 'Company Name', 'Start Date', 'Job Location',
+				 'Job Duration', 'Stipend', 'Last Date To Apply', 'Url'])
+
 
 # Validating the extract data points, if the scrapped item is empty, then this fn will assign nan value.
 def validate_field(field):
@@ -141,5 +148,14 @@ for target_url in job_url:
 	print('Url :', url)
 	print('\n')
 
+# writing the scrapped items to csv via encode the variables here
+	writer.writerow([job_header.encode('utf-8'),
+					 company_name.encode('utf-8'),
+					 start_date.encode('utf-8'),
+					 job_location.encode('utf-8'),
+					 job_duration.encode('utf-8'),
+					 stipend.encode('utf-8'),
+					 apply_by.encode('utf-8'),
+					 url.encode('utf-8')])
 
 driver.quit()
