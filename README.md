@@ -1,5 +1,6 @@
-# InternshalaBot
-This is a Scrapy project to scrape data points of internship jobs opening from https://internshala.com .
+# Interns Job Crawler
+This code example will scrape data points from internship jobs opening on https://internshala.com by using Selenium webdriver for automating the web browse. This website requires login credentials to make any search. Selenium is used here for login purpose and will navigate to target urls for data scraping. Parsel Library used Selectors for extracting data points urls from the web page. Both these packages work very smoothly and extracts clean data in csv format.
+
 This project is only meant for educational purposes.
 
 ## Extracted data
