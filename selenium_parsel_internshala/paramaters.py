@@ -39,5 +39,3 @@ filename = 'filename.csv'           # uncomment me *Output Filename(here you can
 # 'Social Media Market-ing',	'Social Work',	'Software Development',	'Software Testing',	'Statistics',	'Strate-gy',
 # 'Supply Chain Management (SCM)',	'Teaching',	'Telecalling',	'Travel & Tourism',	'UI/UX Design',	'Video Making/Editing',	'Videography',
 # 	'Volunteering',	'Web Development',	'Wordpress Development']
-
-

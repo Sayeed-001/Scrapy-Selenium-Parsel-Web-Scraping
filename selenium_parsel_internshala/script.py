@@ -1,5 +1,7 @@
 ## Initializing Selenium webdriver using Chrome, Login Internshala.com website using username and password.
 # Witing data points to csv
+import logging
+
 from time import sleep
 import re
 import csv
@@ -9,7 +11,14 @@ import paramaters
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
+from selenium.webdriver.remote.remote_connection import LOGGER as seleniumLogger
+
+# Parsel Package used to extract datapoints from webpage.
 from parsel import Selector
 
 # CSV writer/Formatter
@@ -34,6 +43,8 @@ chrome_options = Options()
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument("start-maximized")
 chrome_options.add_argument("--disable-extensions")
+seleniumLogger.setLevel(logging.WARNING)
+
 
 driver = webdriver.Chrome(executable_path=paramaters.chromedriver_path,options=chrome_options)
 driver.implicitly_wait(6)
@@ -41,9 +52,9 @@ driver.get(paramaters.base_url)
 sleep(5)
 
 # Login tab click
-login_button = driver.find_element_by_xpath('//*[@class="nav-item"]/button')
+wait = WebDriverWait(self.driver, 20)
+login_button = wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@class='nav-item']/button")))
 login_button.click()
-sleep(2)
 
 # Enter Username/Email ID
 user_email = driver.find_element_by_id('modal_email')
@@ -60,15 +71,15 @@ sign_in_button = driver.find_element_by_id('modal_login_submit')
 sign_in_button.click()
 sleep(10)
 
-# If you previously checked the preferences on filters section on webpage the uncomment me.
+# If you previously checked the preferences on filters section on webpage then uncomment me.
 #uncheck_preferences = driver.find_element_by_xpath('//*[@id="matching_preference_label"]')
 #uncheck_preferences.click()
 #sleep(2)
 
 # Selecting the job category, check and select the available jobs categorys from paramaters.py file
-category_element = driver.find_element_by_xpath('//*[contains(@id,"select_category_chosen")]')
+category_element = wait.until(EC.element_to_be_clickable((By.ID, "select_category_chosen")))
 category_element.click()
-sleep(2)
+
 enter_category = driver.find_element_by_xpath('//*[@id="select_category_chosen"]/ul/li/input')
 enter_category.send_keys(paramaters.JOB_CATEGORY, Keys.RETURN)
 sleep(3)
@@ -83,7 +94,7 @@ urls = sel.xpath('//*[@class="heading_4_5 profile"]/a/@href').extract()[:5]
 #	job_url = "https://internshala.com" + url
 job_url = ['https://internshala.com'+url for url in urls]	
 
-# navigate to next page
+# Pagination - navigate to next page
 next_page = driver.find_element_by_xpath("//a[@id='next']")
 next_page.click()
 sleep(3)
@@ -102,9 +113,10 @@ for target_url in job_url:
 	driver.get(target_url)
 	sleep(3)
 
+	# Dumping page-source in sel variable
 	sel = Selector(text=driver.page_source)  # Initializing the Selector from Parsel library shows same functionality as of scrapy.selector
 	
-	
+	# Extracting data.
 	job_header =  sel.xpath('normalize-space(//*[@id="details_container"]/div[2]/text())').extract_first()  # Job Heading
 	
 	company_name = sel.xpath('normalize-space(//*[@class="heading_6 company_name"]/a/text())').extract_first()  # Company Name
